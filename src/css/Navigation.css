@@ -1,0 +1,33 @@
+.navigation-bar {
+    background-color: #fff;
+    padding: 0;
+}
+
+.navigation-container {
+    border-bottom: 2px solid #E4E4E4;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.cart-icon{
+    color: #000;
+    cursor: pointer;
+}
+
+.cart-icon-button:focus,
+.cart-icon-button:active,
+.cart-icon-button:hover,
+.cart-icon-button {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.cart-badge {
+    border-radius: 0!important;
+    padding: 0.3em 0.5em;
+    font-size: 0.6em;
+    vertical-align: bottom;
+    background-color: #000 !important;
+    margin-left: -12px;
+}
