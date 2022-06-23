@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Cart from "./Cart";
 import { Badge, Container, Navbar } from "react-bootstrap";
-import { CartItemProps } from "./Cart";
-import { ProductProps } from "./ProductsCard";
 import "../css/Navigation.css";
 import { CartContext } from "../contexts/CartContext";
 

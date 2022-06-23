@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useMemo, useState } from "react";
 import { CartItemProps } from "../components/Cart";
 import { ProductProps } from "../components/ProductsCard";
 
@@ -58,10 +58,12 @@ export const CartContextProvider: React.FC<any> = (props) => {
 		setCartItems([]);
 	};
 
-	const getTotalCartItems = () =>
-		cartItems.reduce((prev, item) => prev + item.quantity, 0);
+	const getTotalCartItems = useCallback(
+		() => cartItems.reduce((prev, item) => prev + item.quantity, 0),
+		[cartItems]
+	);
 
-	const value = useMemo(
+	const contextValue = useMemo(
 		() => ({
 			cartItems,
 			addToCart,
@@ -75,6 +77,8 @@ export const CartContextProvider: React.FC<any> = (props) => {
 	);
 
 	return (
-		<CartContext.Provider value={value}>{props.children}</CartContext.Provider>
+		<CartContext.Provider value={contextValue}>
+			{props.children}
+		</CartContext.Provider>
 	);
 };

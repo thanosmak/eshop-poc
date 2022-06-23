@@ -22,7 +22,6 @@ function Home() {
 
 	const { productsList } = useContext(ProductsContext);
 
-	// Product list functions
 	const handleCategoryFilterData = (filterData: string[]) => {
 		setCategoryFilterData([...filterData]);
 	};

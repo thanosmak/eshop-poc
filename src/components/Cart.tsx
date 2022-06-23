@@ -17,12 +17,11 @@ const Cart = () => {
 		addToCart,
 		removeFromCart,
 		clearCart,
-		getTotalCartItems,
 		cartOpen,
 		setCartOpen,
 	} = useContext(CartContext);
 
-	const toggleCart = () => {
+	const toggleCartOpen = () => {
 		if (cartOpen) {
 			setCartOpen(false);
 		} else {
@@ -42,7 +41,7 @@ const Cart = () => {
 					size={32}
 					icon={shoppingCart}
 					className="cart-icon"
-					onClick={() => toggleCart()}
+					onClick={() => toggleCartOpen()}
 				/>
 			</Dropdown.Toggle>
 
