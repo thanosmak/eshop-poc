@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Card, Col } from "react-bootstrap";
+import { CartContext } from "../contexts/CartContext";
 import "../css/ProductCard.css";
 
 export interface ProductImageDetails {
@@ -29,13 +30,13 @@ export interface ProductProps {
 
 type ProductCardProps = {
 	item: ProductProps;
-	handleAddToCart: (selectedItem: ProductProps) => void;
 };
 
 function ProductsCard(props: ProductCardProps) {
-	const { item, handleAddToCart } = props;
+	const { item } = props;
 	const [showAddButton, setShowAddButton] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
+	const { addToCart } = useContext(CartContext);
 
 	useEffect(() => {
 		const windowWidth = window.innerWidth <= 576;
@@ -66,7 +67,7 @@ function ProductsCard(props: ProductCardProps) {
 							showAddButton || isMobile ? "visible-button" : "hidden-button"
 						}`}
 						variant="primary"
-						onClick={() => handleAddToCart(item)}
+						onClick={() => addToCart(item)}
 						style={{
 							top: item.besteseller ? 320 : 352,
 						}}

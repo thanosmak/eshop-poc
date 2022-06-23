@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { Button, Col, Dropdown, Row } from "react-bootstrap";
 import Icon from "react-icons-kit";
 import { shoppingCart } from "react-icons-kit/feather/shoppingCart";
+import { CartContext } from "../contexts/CartContext";
 import CartItem from "./CartItem";
 import { ProductProps } from "./ProductsCard";
 
@@ -8,32 +10,23 @@ export type CartItemProps = {
 	item: ProductProps;
 	quantity: number;
 };
-type CartProps = {
-	cartItems: CartItemProps[];
-	cartOpen: boolean;
-	onCartOpen: () => void;
-	onCartClose: () => void;
-	clearCart: () => void;
-	handleAddToCart: (selectedItem: ProductProps) => void;
-	handleRemoveFromCart: (id: string) => void;
-};
 
-const Cart = (props: CartProps) => {
+const Cart = () => {
 	const {
 		cartItems,
-		cartOpen,
-		onCartClose,
+		addToCart,
+		removeFromCart,
 		clearCart,
-		onCartOpen,
-		handleAddToCart,
-		handleRemoveFromCart,
-	} = props;
+		getTotalCartItems,
+		cartOpen,
+		setCartOpen,
+	} = useContext(CartContext);
 
 	const toggleCart = () => {
 		if (cartOpen) {
-			onCartClose();
+			setCartOpen(false);
 		} else {
-			onCartOpen();
+			setCartOpen(true);
 		}
 	};
 
@@ -69,7 +62,9 @@ const Cart = (props: CartProps) => {
 					<Col xs={2}>
 						<Button
 							className="close-cart-button"
-							onClick={onCartClose}
+							onClick={() => {
+								setCartOpen(false);
+							}}
 							style={{ width: "100%" }}
 						>
 							X
@@ -82,8 +77,8 @@ const Cart = (props: CartProps) => {
 							key={cartItem.item.id}
 							item={cartItem.item}
 							quantity={cartItem.quantity}
-							handleAddToCart={handleAddToCart}
-							handleRemoveFromCart={handleRemoveFromCart}
+							handleAddToCart={addToCart}
+							handleRemoveFromCart={removeFromCart}
 						/>
 					))
 				) : (

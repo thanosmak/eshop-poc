@@ -1,37 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cart from "./Cart";
 import { Badge, Container, Navbar } from "react-bootstrap";
 import { CartItemProps } from "./Cart";
 import { ProductProps } from "./ProductsCard";
 import "../css/Navigation.css";
+import { CartContext } from "../contexts/CartContext";
 
-type NavigationBarProps = {
-	cartItems: CartItemProps[];
-	cartOpen: boolean;
-	cartItemsLength: number;
-	onCartOpen: () => void;
-	onCartClose: () => void;
-	clearCart: () => void;
-	handleAddToCart: (selectedItem: ProductProps) => void;
-	handleRemoveFromCart: (id: string) => void;
-};
-
-function NavigationBar(props: NavigationBarProps) {
-	const {
-		cartItems,
-		cartItemsLength,
-		onCartOpen,
-		cartOpen,
-		onCartClose,
-		clearCart,
-		handleAddToCart,
-		handleRemoveFromCart,
-	} = props;
+function NavigationBar() {
+	const { getTotalCartItems } = useContext(CartContext);
 	const [cartItemsNumber, setCartItemsNumber] = useState(0);
 
 	useEffect(() => {
-		setCartItemsNumber(cartItemsLength);
-	}, [cartItemsLength]);
+		setCartItemsNumber(getTotalCartItems());
+	}, [getTotalCartItems]);
 
 	return (
 		<Navbar fixed="top" className="navigation-bar">
@@ -41,15 +22,7 @@ function NavigationBar(props: NavigationBarProps) {
 				</Navbar.Brand>
 				<Navbar.Collapse className="justify-content-end">
 					<Navbar.Text>
-						<Cart
-							cartItems={cartItems}
-							cartOpen={cartOpen}
-							onCartOpen={() => onCartOpen()}
-							onCartClose={() => onCartClose()}
-							clearCart={() => clearCart()}
-							handleAddToCart={handleAddToCart}
-							handleRemoveFromCart={handleRemoveFromCart}
-						/>
+						<Cart />
 						<Badge pill className="cart-badge">
 							{cartItemsNumber > 0 && cartItemsNumber}
 						</Badge>

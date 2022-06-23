@@ -1,7 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 import { ProductProps } from "./ProductsCard";
 
-type CartItemProps = {
+export type CartItemProps = {
 	item: ProductProps;
 	quantity: number;
 	handleAddToCart: (selectedItem: ProductProps) => void;

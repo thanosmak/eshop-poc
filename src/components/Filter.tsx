@@ -9,7 +9,7 @@ type Prices = {
 	moreThan200: boolean;
 };
 
-type FilterContainerProps = {
+type FilterProps = {
 	setCategoryFilterData: (categoryFilterData: string[]) => void;
 	setPriceFilterData: (priceFilterData: string) => void;
 	isMobile: boolean;
@@ -17,7 +17,7 @@ type FilterContainerProps = {
 	closeMobileFiler: () => void;
 };
 
-function FilterContainer(props: FilterContainerProps) {
+function Filter(props: FilterProps) {
 	const {
 		setCategoryFilterData,
 		setPriceFilterData,
@@ -177,4 +177,4 @@ function FilterContainer(props: FilterContainerProps) {
 	);
 }
 
-export default FilterContainer;
+export default Filter;

@@ -4,11 +4,10 @@ import { Icon } from "react-icons-kit";
 import { arrows_vertical } from "react-icons-kit/ikons/arrows_vertical";
 import { mix } from "react-icons-kit/entypo/mix";
 import FeaturedProduct from "../FeaturedProduct";
-import FilterContainer from "../FilterContainer";
+import Filter from "../Filter";
 import NavigationBar from "../NavigationBar";
 import ProductsContainer from "../ProductsContainer";
 import { ProductProps } from "../ProductsCard";
-import { CartItemProps } from "../Cart";
 import { ProductsContext } from "../../contexts/ProductContext";
 import "../../css/Home.css";
 
@@ -18,8 +17,6 @@ function Home() {
 	const [sortingValue, setSortingValue] = useState<string>("name");
 	const [categoryFilterData, setCategoryFilterData] = useState<string[]>([]);
 	const [priceFilterData, setPriceFilterData] = useState("");
-	const [cartOpen, setCartOpen] = useState(false);
-	const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
 	const [isMobile, setIsMobile] = useState(false);
 	const [showMobileFilter, setShowMobileFilter] = useState(false);
 
@@ -47,52 +44,6 @@ function Home() {
 		}
 	};
 
-	// Cart functions
-	const handleAddToCart = (selectedItem: ProductProps) => {
-		setCartItems((prev) => {
-			// Check if item is already in cart
-			const indexOfItemInCart = prev.findIndex(
-				(item) => item.item.id === selectedItem.id
-			);
-			const cartItem: CartItemProps = {
-				item: selectedItem,
-				quantity: 1,
-			};
-			const copyOfCartItems = JSON.parse(JSON.stringify(prev));
-
-			// Not in cart
-			if (indexOfItemInCart === -1) {
-				return [...copyOfCartItems, cartItem];
-			} else {
-				copyOfCartItems[indexOfItemInCart].quantity++;
-				return copyOfCartItems;
-			}
-		});
-
-		setCartOpen(true);
-	};
-
-	const handleRemoveFromCart = (id: string) => {
-		setCartItems((prev) =>
-			prev.reduce((prevItem, item) => {
-				if (item.item.id === id) {
-					if (item.quantity === 1) return prevItem;
-					return [...prevItem, { ...item, quantity: item.quantity - 1 }];
-				} else {
-					return [...prevItem, item];
-				}
-			}, [] as CartItemProps[])
-		);
-	};
-
-	const handleClearCart = () => {
-		setCartItems([]);
-		setCartOpen(false);
-	};
-
-	const getTotalCartItems = (items: CartItemProps[]) =>
-		items.reduce((prev, item) => prev + item.quantity, 0);
-
 	const openFilterModal = () => {
 		setShowMobileFilter(true);
 	};
@@ -105,17 +56,8 @@ function Home() {
 
 	return (
 		<div className="home-wrapper">
-			<NavigationBar
-				cartItems={cartItems}
-				cartOpen={cartOpen}
-				cartItemsLength={getTotalCartItems(cartItems)}
-				onCartOpen={() => setCartOpen(true)}
-				onCartClose={() => setCartOpen(false)}
-				clearCart={() => handleClearCart()}
-				handleAddToCart={handleAddToCart}
-				handleRemoveFromCart={handleRemoveFromCart}
-			/>
-			<FeaturedProduct products={products} handleAddToCart={handleAddToCart} />
+			<NavigationBar />
+			<FeaturedProduct products={products} />
 			<Container className="main-body-container">
 				<Row style={{ margin: "0px auto 26px" }}>
 					<Col className="main-body-title">Photography</Col>
@@ -152,7 +94,7 @@ function Home() {
 				</Row>
 				<Row>
 					<Col md={3}>
-						<FilterContainer
+						<Filter
 							setCategoryFilterData={handleCategoryFilterData}
 							setPriceFilterData={handlePriceFilterData}
 							isMobile={isMobile}
@@ -166,7 +108,6 @@ function Home() {
 							sortingValue={sortingValue}
 							selectedCategories={categoryFilterData}
 							selectedPriceRange={priceFilterData}
-							handleAddToCart={handleAddToCart}
 						/>
 					</Col>
 				</Row>

@@ -10,7 +10,6 @@ type ProductsContainerProps = {
 	sortingValue: string;
 	selectedCategories: string[];
 	selectedPriceRange: string;
-	handleAddToCart: (selectedItem: ProductProps) => void;
 };
 
 function ProductsContainer(props: ProductsContainerProps) {
@@ -76,13 +75,7 @@ function RenderProductList(
 	products: ProductProps[]
 ) {
 	return products.map((product, index) => {
-		return (
-			<ProductsCard
-				key={index}
-				item={product}
-				handleAddToCart={props.handleAddToCart}
-			/>
-		);
+		return <ProductsCard key={index} item={product} />;
 	});
 }
 

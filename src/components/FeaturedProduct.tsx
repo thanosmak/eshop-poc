@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Row, Stack } from "react-bootstrap";
 import { ProductProps } from "./ProductsCard";
+import { CartContext } from "../contexts/CartContext";
 import "../css/FeaturedProduct.css";
 
 type FeaturedProductProps = {
 	products: ProductProps[];
-	handleAddToCart: (selectedItem: ProductProps) => void;
 };
 
 function FeaturedProduct(props: FeaturedProductProps) {
 	const [featuredProdudct, setFeaturedProdudct] = useState<ProductProps>();
 	const [isMobile, setIsMobile] = useState(false);
-	const { products, handleAddToCart } = props;
+	const { addToCart } = useContext(CartContext);
+	const { products } = props;
 
-	const addToCart = () => {
+	const addFeaturedProductToCart = () => {
 		if (featuredProdudct) {
-			handleAddToCart(featuredProdudct);
+			addToCart(featuredProdudct);
 		}
 	};
 
@@ -35,7 +36,7 @@ function FeaturedProduct(props: FeaturedProductProps) {
 				{!isMobile && (
 					<Button
 						className=" add-product-button feature-add-button-desktop"
-						onClick={() => addToCart()}
+						onClick={() => addFeaturedProductToCart()}
 					>
 						Add to cart
 					</Button>
@@ -57,7 +58,7 @@ function FeaturedProduct(props: FeaturedProductProps) {
 			{isMobile && (
 				<Button
 					className=" add-product-button feature-add-button-mobile"
-					onClick={() => addToCart()}
+					onClick={() => addFeaturedProductToCart()}
 				>
 					Add to cart
 				</Button>
